@@ -1,25 +1,161 @@
 <!DOCTYPE html>
 <html>
-<link rel="manifest" href="/visapush/manifest.json"/>
+<link rel="manifest" href="/visapush/manifest.json" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:900&display=swap" rel="stylesheet" />
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
 <script>
     var pushalert_sw_file = '/visapush/sw.js';
     var pushalert_sw_scope = "/visapush/";
 </script>
 <!-- PushAlert -->
 <script type="text/javascript">
-(function(d, t) {
+    (function (d, t) {
         var g = d.createElement(t),
-        pushalert_sw_file = '/visapush/sw.js',
-        s = d.getElementsByTagName(t)[0];
+            pushalert_sw_file = '/visapush/sw.js',
+            s = d.getElementsByTagName(t)[0];
         g.src = "https://cdn.pushalert.co/integrate_ec7d4319c43f630a0c1912fcb4d9d7a9.js";
         s.parentNode.insertBefore(g, s);
-}(document, "script"));
+    }(document, "script"));
 </script>
-<!-- End PushAlert -->
+
+<head>
+    <title>Vize Randevu Bildirimi</title>
+    <style>
+        body {
+            font-family: Montserrat, sans-serif;
+            font-weight: 900;
+        }
+
+        body,
+        body * {
+            cursor: none;
+        }
+
+        .shapes {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background: #2128bd;
+            overflow: hidden;
+        }
+
+        .shape {
+            will-change: transform;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape.shape-1 {
+            background: #005ffe;
+            width: 650px;
+            height: 650px;
+            margin: -325px 0 0 -325px;
+        }
+
+        .shape.shape-2 {
+            background: #ffe5e3;
+            width: 440px;
+            height: 440px;
+            margin: -220px 0 0 -220px;
+        }
+
+        .shape.shape-3 {
+            background: #ffcc57;
+            width: 270px;
+            height: 270px;
+            margin: -135px 0 0 -135px;
+        }
+
+        .content {
+            top: 0;
+            left: 0;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background: #fff;
+            mix-blend-mode: screen;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 100px;
+            color: #000;
+            margin: 0;
+            text-align: center;
+        }
+
+        @media (min-width: 419px) {
+            h1 {
+                font-size: 100px;
+                font-size: calc((0.0989119683 * 100vw + (58.5558852621px)));
+            }
+        }
+
+        @media (min-width: 1430px) {
+            h1 {
+                font-size: 200px;
+            }
+        }
+
+        .cursor {
+            position: fixed;
+            background: #2128bd;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border-radius: 50%;
+            will-change: transform;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        ::-moz-selection {
+            color: #fff;
+            background: #2128bd;
+        }
+
+        ::selection {
+            color: #fff;
+            background: #2128bd;
+        }
+    </style>
+</head>
+
 <body>
-
-<h1>Visa Push</h1>
-<p>Bildirimlere izin veriniz</p>
-
+    <div class="cursor"></div>
+    <div class="shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    <div class="content">
+        <h1>VisaPush</h1>
+        <p>Bildirim Al!</p>
+    </div>
 </body>
+<script>
+    document.body.addEventListener("mousemove", (evt) => {
+        const mouseX = evt.clientX;
+        const mouseY = evt.clientY;
+
+        gsap.set(".cursor", {
+            x: mouseX,
+            y: mouseY,
+        });
+
+        gsap.to(".shape", {
+            x: mouseX,
+            y: mouseY,
+            stagger: -0.1,
+        });
+    });
+</script>
+
 </html>
